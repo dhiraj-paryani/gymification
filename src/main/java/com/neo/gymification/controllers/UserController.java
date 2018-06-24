@@ -35,6 +35,7 @@ public class UserController {
   )
   @ResponseBody
   public User createUser(@RequestBody User user) {
+    System.out.println("GOT A REQUEST TO CREATE USER");
     return userService.createUser(user);
   }
 
