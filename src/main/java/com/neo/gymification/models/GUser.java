@@ -3,11 +3,15 @@ package com.neo.gymification.models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
 import lombok.Getter;
@@ -17,10 +21,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@JsonIgnoreProperties(ignoreUnknown = true)
-@JsonInclude(value = JsonInclude.Include.NON_EMPTY, content = JsonInclude.Include.NON_NULL)
 @Entity
-public class User {
+public class GUser {
 
   @Id
   @NotBlank
@@ -32,10 +34,11 @@ public class User {
   private String name;
 
   @NotBlank
+  @Column(unique = true)
   private String hwAddress;
 
-  private Integer points;
+  private Long points = (long)250;
 
-  /*@OneToMany
-  private List<Activity> userActivities;*/
+ /*@OneToMany
+ private List<Activity> userActivities;*/
 }

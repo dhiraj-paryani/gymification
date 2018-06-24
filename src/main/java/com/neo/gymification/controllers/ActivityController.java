@@ -1,11 +1,12 @@
 package com.neo.gymification.controllers;
 
-import com.neo.gymification.models.GUser;
-import com.neo.gymification.services.UserServiceImpl;
+import com.neo.gymification.models.Activity;
+import com.neo.gymification.services.ActivityServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,39 +15,33 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/users")
-public class UserController {
-
-  private UserServiceImpl userService;
+public class ActivityController {
 
   @Autowired
-  public UserController(UserServiceImpl userService) {
-    this.userService = userService;
-  }
+  private ActivityServiceImpl activityService;
 
-  /*
-   * Create User API.
-   */
   @RequestMapping(
+      value = "users/{hwAddress}/activities",
       method = RequestMethod.POST,
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE
   )
   @ResponseBody
-  public GUser createUser(@RequestBody GUser user) {
-    return userService.createUser(user);
+  public Activity createUserActivity(@RequestBody Activity activity,
+                                     @PathVariable("hwAddress") String hwAddress) {
+
+    return activityService.createUserActivity(activity, hwAddress);
   }
 
-  /*
-   * Get All Users API.
-   */
   @RequestMapping(
+      value = "users/{hwAddress}/activities",
       method = RequestMethod.GET,
+      consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE
   )
   @ResponseBody
-  public List<GUser> getAllUsers() {
-    return userService.getAllUsers();
+  public List<Activity> getUserActivitiesByUserName(@PathVariable("hwAddress") String hwAddress) {
+    return activityService.getUserActivitiesByUserName(hwAddress);
   }
 
 }

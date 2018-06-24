@@ -1,6 +1,6 @@
 package com.neo.gymification.services;
 
-import com.neo.gymification.models.User;
+import com.neo.gymification.models.GUser;
 import com.neo.gymification.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +19,16 @@ public class UserServiceImpl {
     this.userRepository = userRepository;
   }
 
-  public User createUser(User user) {
+  public GUser createUser(GUser user) {
+    if( userRepository.findById(user.getUserName()).isPresent() ) {
+      throw new RuntimeException("User is already present in the DB.");
+    }
+
     return userRepository.save(user);
   }
 
-  public User getUserByUserName(String userName) {
-    return userRepository.findById(userName).get();
-  }
-
-  public List<User> getAllUsers() {
-    List<User> allUsers = new ArrayList<>();
+  public List<GUser> getAllUsers() {
+    List<GUser> allUsers = new ArrayList<>();
     userRepository.findAll().forEach(allUsers::add);
     return allUsers;
   }

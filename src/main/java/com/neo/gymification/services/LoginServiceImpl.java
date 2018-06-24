@@ -1,7 +1,7 @@
 package com.neo.gymification.services;
 
+import com.neo.gymification.models.GUser;
 import com.neo.gymification.models.Login;
-import com.neo.gymification.models.User;
 import com.neo.gymification.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +17,8 @@ public class LoginServiceImpl {
     this.userRepository = userRepository;
   }
 
-  public User login(Login login) {
-    User dbUser = userRepository.findById(login.getUserName()).get();
+  public GUser login(Login login) {
+    GUser dbUser = userRepository.findById(login.getUserName()).get();
 
     if (dbUser == null) {
       throw new RuntimeException("User is not present in DB");

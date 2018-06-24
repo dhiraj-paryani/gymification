@@ -1,6 +1,6 @@
 package com.neo.gymification.repositories;
 
-import com.neo.gymification.models.User;
+import com.neo.gymification.models.GUser;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -8,7 +8,9 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends CrudRepository<User, String> {
+public interface UserRepository extends CrudRepository<GUser, String> {
 
-  Optional<User> findByUserName(String userName);
+  Optional<GUser> findByUserName(String userName);
+
+  Optional<GUser> findByHwAddress(String hwAddress);
 }

@@ -1,7 +1,7 @@
 package com.neo.gymification.controllers;
 
+import com.neo.gymification.models.GUser;
 import com.neo.gymification.models.Login;
-import com.neo.gymification.models.User;
 import com.neo.gymification.services.LoginServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class LoginController {
       produces = MediaType.APPLICATION_JSON_VALUE
   )
   @ResponseBody
-  public User login(@RequestBody Login login) {
+  public GUser login(@RequestBody Login login) {
     return loginService.login(login);
   }
 }
