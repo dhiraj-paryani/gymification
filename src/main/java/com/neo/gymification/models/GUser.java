@@ -8,8 +8,11 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
@@ -39,6 +42,10 @@ public class GUser {
 
   private Long points = (long)250;
 
- /*@OneToMany
- private List<Activity> userActivities;*/
+ @ManyToMany(fetch = FetchType.EAGER)
+ private List<UserBadge> userBadges = new ArrayList<>();
+
+ public void addUserBadge(UserBadge userBadge) {
+  this.userBadges.add(userBadge);
+ }
 }
