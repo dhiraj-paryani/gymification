@@ -62,6 +62,8 @@ public class ImageController {
     Map<String, Map<String, String>> metadata = new HashMap<String, Map<String, String>>();
     metadata.put("base", userImageService.getBaseMap());
     metadata.put("head", userImageService.getHeadMap());
+    metadata.put("mask", userImageService.getMaskMap());
+    metadata.put("glass", userImageService.getGlassMap());
     return metadata;
   }
 
@@ -82,6 +84,9 @@ public class ImageController {
     if(existingImage != null) {
       existingImage.setBase(userImage.getBase() == null ? existingImage.getBase(): userImage.getBase());
       existingImage.setHead(userImage.getHead() == null ? existingImage.getHead(): userImage.getHead());
+      existingImage.setGlass(userImage.getGlass() == null ? existingImage.getGlass(): userImage.getGlass());
+      existingImage.setMask(userImage.getMask() == null ? existingImage.getMask(): userImage.getMask());
+
       System.out.println("EH" + existingImage.getHead());
       System.out.println("UIH" + userImage.getHead());
     } else {
@@ -90,5 +95,7 @@ public class ImageController {
     UserImage createImage =  userImageService.createUserImage(existingImage);
     return createImage;
   }
+
+
 
 }

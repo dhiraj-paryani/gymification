@@ -61,8 +61,6 @@ public class UserController {
     return userService.getAllActiveUsers();
   }
 
-
-
   @RequestMapping(
       value = "/search/{username}",
       method = RequestMethod.GET,

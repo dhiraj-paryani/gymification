@@ -30,4 +30,8 @@ public class UserImage {
   private String base;
 
   private String head;
+
+  private String glass;
+
+  private String mask;
 }
