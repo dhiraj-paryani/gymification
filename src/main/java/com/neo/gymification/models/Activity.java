@@ -29,6 +29,8 @@ public class Activity {
   @Id
   private UUID id;
 
+  private ActivityType activityType;
+
   @ManyToOne
   @JoinColumn(name = "hwAddress", nullable = false)
   @JsonIgnore
