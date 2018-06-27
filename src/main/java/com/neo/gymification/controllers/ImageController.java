@@ -2,6 +2,7 @@ package com.neo.gymification.controllers;
 
 import com.neo.gymification.models.UserImage;
 import com.neo.gymification.services.UserImageService;
+import com.sun.org.apache.xml.internal.resolver.readers.ExtendedXMLCatalogReader;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -36,6 +37,7 @@ public class ImageController {
   @ResponseBody
   public byte[] getImage(@RequestParam("userName") String userName) throws IOException {
     UserImage userImage = userImageService.getUserByUserName(userName);
+
     return userImageService.imageFromUserImage(userImage);
   }
 
@@ -69,9 +71,23 @@ public class ImageController {
   )
   @ResponseBody
   public UserImage createUserImage(@RequestBody UserImage userImage) {
-    System.out.println("Got a request" + userImage.getBase());
-    UserImage createImage =  userImageService.createUserImage(userImage);
-    System.out.println("User Image " + userImage.getHead());
+    UserImage existingImage = null;
+    try {
+       existingImage = userImageService.getUserByUserName(userImage.getUserName());
+
+    } catch ( Exception e) {
+
+    }
+
+    if(existingImage != null) {
+      existingImage.setBase(userImage.getBase() == null ? existingImage.getBase(): userImage.getBase());
+      existingImage.setHead(userImage.getHead() == null ? existingImage.getHead(): userImage.getHead());
+      System.out.println("EH" + existingImage.getHead());
+      System.out.println("UIH" + userImage.getHead());
+    } else {
+      existingImage = userImage;
+    }
+    UserImage createImage =  userImageService.createUserImage(existingImage);
     return createImage;
   }
 

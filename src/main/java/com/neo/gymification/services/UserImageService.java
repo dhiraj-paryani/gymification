@@ -16,13 +16,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.imageio.ImageIO;
 
 @Service
 public class UserImageService {
 
-  Map<String, String> baseMap = new HashMap<String, String>();
+  Map<String, String> baseMap = new TreeMap<String, String>();
   Map<String, String> headMap = new HashMap<String, String>();
 
   private UserImageRepository userImageRepository;
@@ -83,7 +84,7 @@ public class UserImageService {
 
   public byte[] imageFromUserImage(UserImage userImage) throws IOException {
     File baseImage =  ResourceUtils.getFile("classpath:images/" + getBaseMap().get(userImage.getBase()));
-    if(!userImage.getHead().isEmpty()) {
+    if(userImage.getHead() != null && !userImage.getHead().isEmpty()) {
       File headImage =  ResourceUtils.getFile("classpath:images/" + getHeadMap().get(userImage.getHead()));
       return mergeImage(baseImage, headImage);
     }

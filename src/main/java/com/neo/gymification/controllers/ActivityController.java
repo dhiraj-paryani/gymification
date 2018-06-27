@@ -36,7 +36,6 @@ public class ActivityController {
   @RequestMapping(
       value = "users/{hwAddress}/activities",
       method = RequestMethod.GET,
-      consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE
   )
   @ResponseBody

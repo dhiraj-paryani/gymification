@@ -1,11 +1,11 @@
 ----------------------------------------------------------------
-Mon Jun 25 02:08:29 IST 2018:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0164-3384-f679-00000759c3a0 
-on database directory memory:/Users/i346453/Projects/gymification/testdb with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 
-Loaded from file:/Users/i346453/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar
+Wed Jun 27 12:35:55 IST 2018:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-0164-4010-1daa-0000071a3a98 
+on database directory memory:/Users/i346208/personal/projects/spring/gymification/testdb with class loader sun.misc.Launcher$AppClassLoader@18b4aac2 
+Loaded from file:/Users/i346208/.m2/repository/org/apache/derby/derby/10.14.2.0/derby-10.14.2.0.jar
 java.vendor=Oracle Corporation
-java.runtime.version=1.8.0_172-b11
-user.dir=/Users/i346453/Projects/gymification
+java.runtime.version=1.8.0_151-b12
+user.dir=/Users/i346208/personal/projects/spring/gymification
 os.name=Mac OS X
 os.arch=x86_64
 os.version=10.13.4
