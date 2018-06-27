@@ -4,7 +4,9 @@ import com.neo.gymification.models.UserImage;
 import com.neo.gymification.services.UserImageService;
 import com.sun.org.apache.xml.internal.resolver.readers.ExtendedXMLCatalogReader;
 
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ResourceUtils;
@@ -14,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,8 +52,20 @@ public class ImageController {
   )
   @ResponseBody
   public byte[] getImagePart(@RequestParam("partName") String partName) throws IOException {
-    File imageFile =  ResourceUtils.getFile("classpath:images/"+ partName);
-    return userImageService.read(imageFile);
+    ClassPathResource classPathResource = new ClassPathResource("images/" + partName);
+    System.out.println("Partname " + partName);
+    InputStream is = classPathResource.getInputStream();
+    ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+    int nRead;
+    byte[] data = new byte[16384];
+
+    while ((nRead = is.read(data, 0, data.length)) != -1) {
+      buffer.write(data, 0, nRead);
+    }
+
+    buffer.flush();
+    return buffer.toByteArray();
   }
 
   @RequestMapping(
