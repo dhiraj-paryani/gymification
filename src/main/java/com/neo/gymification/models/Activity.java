@@ -37,7 +37,7 @@ public class Activity {
   @NonNull
   private Long time;
 
-  private Date date;
+  private Long date;
 
   private Long points;
 }
