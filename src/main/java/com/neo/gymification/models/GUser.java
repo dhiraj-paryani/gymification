@@ -42,6 +42,8 @@ public class GUser {
 
   private Long points = (long)250;
 
+  private boolean active = false;
+
  @ManyToMany(fetch = FetchType.EAGER)
  private List<UserBadge> userBadges = new ArrayList<>();
 

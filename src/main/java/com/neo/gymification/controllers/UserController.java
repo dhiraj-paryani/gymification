@@ -52,7 +52,19 @@ public class UserController {
   }
 
   @RequestMapping(
-      value = "/{username}",
+      value = "/active",
+      method = RequestMethod.GET,
+      produces = MediaType.APPLICATION_JSON_VALUE
+  )
+  @ResponseBody
+  public List<GUser> getAllActiveUsers() {
+    return userService.getAllActiveUsers();
+  }
+
+
+
+  @RequestMapping(
+      value = "/search/{username}",
       method = RequestMethod.GET,
       produces = MediaType.APPLICATION_JSON_VALUE
   )

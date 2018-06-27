@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.security.Guard;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl {
@@ -28,6 +30,14 @@ public class UserServiceImpl {
     return userRepository.save(user);
   }
 
+  public GUser updateUser(GUser user) {
+    if( !userRepository.findById(user.getUserName()).isPresent() ) {
+      throw new RuntimeException("User does not exist");
+    }
+
+    return userRepository.save(user);
+  }
+
   public GUser getUserByUsername(String username) {
     return userRepository.findByUserName(username).get();
   }
@@ -38,4 +48,16 @@ public class UserServiceImpl {
     userRepository.findAll(pageable).forEach(allUsers::add);
     return allUsers;
   }
+
+  public List<GUser> getAllActiveUsers() {
+    return userRepository.findByActiveTrue().get();
+
+  }
+
+  public GUser getUserByHwAddress(String hwAddress) {
+    Optional<GUser> maybeUser = userRepository.findByHwAddress(hwAddress);
+    if(!maybeUser.isPresent()) throw new RuntimeException("User not found");
+    return  maybeUser.get();
+  }
+
 }
