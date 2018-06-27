@@ -2,7 +2,6 @@ package com.neo.gymification.controllers;
 
 import com.neo.gymification.models.UserImage;
 import com.neo.gymification.services.UserImageService;
-import com.sun.org.apache.xml.internal.resolver.readers.ExtendedXMLCatalogReader;
 
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
