@@ -4,6 +4,7 @@ import com.neo.gymification.models.GUser;
 import com.neo.gymification.repositories.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -32,9 +33,9 @@ public class UserServiceImpl {
   }
 
 
-  public List<GUser> getAllUsers() {
+  public List<GUser> getAllUsers(Pageable pageable) {
     List<GUser> allUsers = new ArrayList<>();
-    userRepository.findAll().forEach(allUsers::add);
+    userRepository.findAll(pageable).forEach(allUsers::add);
     return allUsers;
   }
 }

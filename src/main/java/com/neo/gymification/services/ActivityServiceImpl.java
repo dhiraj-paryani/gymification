@@ -46,7 +46,7 @@ public class ActivityServiceImpl {
   }
 
   public List<Activity> getUserActivitiesByUserName(String hwAddress) {
-    GUser user = userRepository.findByHwAddress(hwAddress)
+    userRepository.findByHwAddress(hwAddress)
         .orElseThrow(() -> new RuntimeException("hwAddress is not present in DB"));
     return activityRepository.findByUserHwAddress(hwAddress);
   }

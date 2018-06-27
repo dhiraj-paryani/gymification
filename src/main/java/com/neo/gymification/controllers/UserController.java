@@ -4,6 +4,7 @@ import com.neo.gymification.models.GUser;
 import com.neo.gymification.services.UserServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -46,8 +47,8 @@ public class UserController {
       produces = MediaType.APPLICATION_JSON_VALUE
   )
   @ResponseBody
-  public List<GUser> getAllUsers() {
-    return userService.getAllUsers();
+  public List<GUser> getAllUsers(Pageable pageable) {
+    return userService.getAllUsers(pageable);
   }
 
   @RequestMapping(

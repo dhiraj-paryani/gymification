@@ -2,6 +2,8 @@ package com.neo.gymification.repositories;
 
 import com.neo.gymification.models.GUser;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,4 +15,6 @@ public interface UserRepository extends CrudRepository<GUser, String> {
   Optional<GUser> findByUserName(String userName);
 
   Optional<GUser> findByHwAddress(String hwAddress);
+
+  Page<GUser> findAll(Pageable pageable);
 }
