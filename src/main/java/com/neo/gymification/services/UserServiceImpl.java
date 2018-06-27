@@ -27,6 +27,11 @@ public class UserServiceImpl {
     return userRepository.save(user);
   }
 
+  public GUser getUserByUsername(String username) {
+    return userRepository.findByUserName(username).get();
+  }
+
+
   public List<GUser> getAllUsers() {
     List<GUser> allUsers = new ArrayList<>();
     userRepository.findAll().forEach(allUsers::add);
