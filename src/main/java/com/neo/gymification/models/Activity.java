@@ -29,6 +29,8 @@ public class Activity {
   @Id
   private UUID id;
 
+  private UUID taskId;
+
   private ActivityType activityType;
 
   @ManyToOne

@@ -57,6 +57,7 @@ public class ActivityServiceImpl {
         .orElseThrow(() -> new RuntimeException("hwAddress is not present in DB"));
     return activityRepository.findByUserHwAddress(hwAddress);
   }
+
   public List<Activity> getUserActivitiesByUserNameAfterDate(String hwAddress, long date) {
     userRepository.findByHwAddress(hwAddress)
         .orElseThrow(() -> new RuntimeException("hwAddress is not present in DB"));
@@ -64,10 +65,11 @@ public class ActivityServiceImpl {
   }
 
   public void assingPointsFromTask(WeeklyTask t, String hwAddress) {
-    if (activityRepository.findById(t.getUuid()).isPresent())
+    if (activityRepository.findByTaskIdAndUser_HwAddress(t.getUuid(), hwAddress).isPresent())
       return;
     Activity activity = new Activity();
-    activity.setId(t.getUuid());
+    activity.setId(UUID.randomUUID());
+    activity.setTaskId(t.getUuid());
     activity.setActivityType(ActivityType.WEEKLY_TASK);
     activity.setTime(t.getCurrentProgress());
     activity.setPoints(t.getPoints());
