@@ -129,18 +129,21 @@ public class UserFitnessDataService {
                                             Long count,
                                             Long points) {
 
-    Activity activity = new Activity();
-    activity.setId(UUID.randomUUID());
-    activity.setTaskId(taskId);
-    activity.setActivityType(activityType);
-    activity.setTime(Long.parseLong("0"));
-    activity.setPoints(points);
-    activity.setDate(new Date().getTime());
-    GUser user = getUserByHwAddress(hwAddress);
-    user.setPoints( user.getPoints() + points);
-    activity.setUser(user);
+    if (points != 0) {
+      Activity activity = new Activity();
+      activity.setId(UUID.randomUUID());
+      activity.setTaskId(taskId);
+      activity.setActivityType(activityType);
+      activity.setTime(Long.parseLong("0"));
+      activity.setPoints(points);
+      activity.setDate(new Date().getTime());
+      GUser user = getUserByHwAddress(hwAddress);
+      user.setPoints( user.getPoints() + points);
+      activity.setUser(user);
 
-    activityRepository.save(activity);
+      activityRepository.save(activity);
+    }
+
     System.out.println("Saved Activity");
   }
 
