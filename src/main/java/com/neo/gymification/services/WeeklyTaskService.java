@@ -2,7 +2,9 @@ package com.neo.gymification.services;
 
 import com.neo.gymification.models.Activity;
 import com.neo.gymification.models.TaskType;
+import com.neo.gymification.models.UserFitnessData;
 import com.neo.gymification.models.WeeklyTask;
+import com.neo.gymification.repositories.UserFitnessDataRepository;
 import com.neo.gymification.repositories.WeeklyTaskRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -19,12 +22,13 @@ public class WeeklyTaskService {
 
   WeeklyTaskRepository weeklyTaskRepository;
   ActivityServiceImpl activityService;
+  UserFitnessDataRepository userFitnessDataRepository;
 
-  @Autowired
   public WeeklyTaskService(WeeklyTaskRepository weeklyTaskRepository, ActivityServiceImpl
-      activityService) {
+      activityService, UserFitnessDataRepository userFitnessDataRepository) {
     this.weeklyTaskRepository = weeklyTaskRepository;
     this.activityService = activityService;
+    this.userFitnessDataRepository = userFitnessDataRepository;
   }
 
   public WeeklyTask createWeeklyTask(WeeklyTask task) {
@@ -107,6 +111,41 @@ public class WeeklyTaskService {
         totalTime += activity.getTime();
       }
       task.setCurrentProgress(totalTime);
+    } else if (task.getTaskType() == TaskType.STEPS) {
+      Date todayDate = new Date();
+      cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
+      Date startDate = cal.getTime();
+
+      long totalSteps = 0;
+      while(todayDate.after(startDate) || todayDate.equals(startDate)) {
+        Optional<UserFitnessData> maybeData = userFitnessDataRepository.findById(ActivityServiceImpl.dateToDayDate(startDate).toString());
+
+        if(maybeData.isPresent()) {
+          totalSteps += maybeData.get().getSteps();
+        }
+        cal.add(Calendar.DATE, 1);
+        startDate = cal.getTime();
+      }
+      task.setCurrentProgress(totalSteps);
+
+    } else if (task.getTaskType() == TaskType.CALORIES) {
+      Date todayDate = new Date();
+      cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
+      Date startDate = cal.getTime();
+
+      long totalCalories = 0;
+      while(todayDate.after(startDate) || todayDate.equals(startDate)) {
+        Optional<UserFitnessData> maybeData = userFitnessDataRepository.findById(ActivityServiceImpl.dateToDayDate(startDate).toString());
+
+        if(maybeData.isPresent()) {
+          totalCalories += maybeData.get().getCalories();
+        }
+        cal.add(Calendar.DATE, 1);
+        startDate = cal.getTime();
+      }
+
+      task.setCurrentProgress(totalCalories);
+
     }
     return task;
   }

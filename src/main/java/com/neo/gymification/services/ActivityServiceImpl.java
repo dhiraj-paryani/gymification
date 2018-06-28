@@ -87,7 +87,7 @@ public class ActivityServiceImpl {
     return totalTimeSpent;
   }
 
-  public Long dateToDayDate(Date dateObject) {
+  public static Long dateToDayDate(Date dateObject) {
     return Long.parseLong(
         dateObject.getDate() + "" + dateObject.getMonth() + dateObject.getYear());
   }

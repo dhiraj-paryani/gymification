@@ -72,5 +72,4 @@ public class ActivityController {
   public Long getTotalTimeSpent(@PathVariable("hwAddress") String hwAddress, @RequestParam("date") Long date) {
     return activityService.getTotalTimeSpent(hwAddress, date);
   }
-
 }
