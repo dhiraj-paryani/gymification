@@ -86,7 +86,7 @@ public class WeeklyTaskService {
           break;
         }
         for(Activity activity: activities) {
-          System.out.println("Activity date: " + activity.getDate());
+          System.out.println("Activity date: " + activity.getDate() + " " + " Type " + activity.getActivityType());
           if(activity.getDate() >= startTime && activity.getDate() < endTime){
             System.out.println("Adding streak ");
             streak++;

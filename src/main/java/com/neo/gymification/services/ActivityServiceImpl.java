@@ -61,7 +61,7 @@ public class ActivityServiceImpl {
   public List<Activity> getUserActivitiesByUserNameAfterDate(String hwAddress, long date) {
     userRepository.findByHwAddress(hwAddress)
         .orElseThrow(() -> new RuntimeException("hwAddress is not present in DB"));
-    return activityRepository.findByUserHwAddressAndDateGreaterThanOrderByDate(hwAddress, date);
+    return activityRepository.findByUserHwAddressAndActivityTypeAndDateGreaterThanOrderByDate(hwAddress, ActivityType.GYM_VISIT, date);
   }
 
   public void assingPointsFromTask(WeeklyTask t, String hwAddress) {
