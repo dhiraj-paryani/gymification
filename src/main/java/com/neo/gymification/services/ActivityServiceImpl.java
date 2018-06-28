@@ -3,7 +3,6 @@ package com.neo.gymification.services;
 import com.neo.gymification.models.Activity;
 import com.neo.gymification.models.ActivityType;
 import com.neo.gymification.models.GUser;
-import com.neo.gymification.models.TaskType;
 import com.neo.gymification.models.WeeklyTask;
 import com.neo.gymification.repositories.ActivityRepository;
 import com.neo.gymification.repositories.UserRepository;
@@ -12,8 +11,6 @@ import com.neo.gymification.repositories.WeeklyTaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -81,7 +78,17 @@ public class ActivityServiceImpl {
     activityRepository.save(activity);
   }
 
-  public Long getTotalTimeSpent(String hwAddress) {
-    return Long.parseLong("0");
+  public Long getTotalTimeSpent(String hwAddress, Long date) {
+    Long totalTimeSpent = Long.parseLong("0");
+    for( Activity activity: activityRepository.findByUserHwAddress(hwAddress)) {
+      if (dateToDayDate(new Date(date)).compareTo(dateToDayDate(new Date(activity.getDate()))) == 0)
+      totalTimeSpent = totalTimeSpent + activity.getTime();
+    }
+    return totalTimeSpent;
+  }
+
+  public Long dateToDayDate(Date dateObject) {
+    return Long.parseLong(
+        dateObject.getDate() + "" + dateObject.getMonth() + dateObject.getYear());
   }
 }

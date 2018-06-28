@@ -50,6 +50,7 @@ public class UserFitnessDataService {
 
     Date dateObject = new Date(userFitnessData.getDate());
 
+
     Long dbDate = Long.parseLong(
         dateObject.getDate() + "" + dateObject.getMonth() + dateObject.getYear());
 
@@ -63,21 +64,23 @@ public class UserFitnessDataService {
     } else {
       userFitnessData.setDate(dbDate);
       userFitnessData.setId(UUID.randomUUID());
-      /*addPointsToUserData(userFitnessData.getHwAddress(),
-          userFitnessData.getSteps()/10 + userFitnessData.getCalories()/5);*/
 
+      Long stepsPoints = userFitnessData.getSteps()/10;
+      Long caloriesPoints = userFitnessData.getCalories()/5;
       createActivityForFitnessData(userFitnessData.getHwAddress(),
           userFitnessData.getId(),
           ActivityType.STEPS,
           userFitnessData.getSteps(),
-          userFitnessData.getSteps()/10);
+          stepsPoints);
 
       createActivityForFitnessData(userFitnessData.getHwAddress(),
           userFitnessData.getId(),
           ActivityType.CALORIES,
           userFitnessData.getCalories(),
-          userFitnessData.getCalories()/5);
+          caloriesPoints);
 
+
+      userFitnessData.setIncreasedPoints( stepsPoints + caloriesPoints);
       return userFitnessDataRepository.save(userFitnessData);
     }
   }
@@ -91,6 +94,7 @@ public class UserFitnessDataService {
     Long dbUserCalories = dbUserFitnessData.getCalories();
     Long requestUserCalories = requestedUserFitnessData.getCalories();
 
+    Long increasedPoints = Long.parseLong("0");
     if (dbUserSteps < requestUserSteps) {
       dbUserFitnessData.setSteps(requestUserSteps);
       Long pointsToBeAdded = (requestUserSteps - dbUserSteps)/10;
@@ -99,6 +103,8 @@ public class UserFitnessDataService {
           ActivityType.STEPS,
           requestUserSteps - dbUserSteps,
           pointsToBeAdded);
+
+      increasedPoints += pointsToBeAdded;
     }
 
     if (dbUserCalories < requestUserCalories) {
@@ -109,8 +115,11 @@ public class UserFitnessDataService {
           ActivityType.CALORIES,
           requestUserCalories - dbUserCalories,
           pointsToBeAdded);
+
+      increasedPoints += pointsToBeAdded;
     }
 
+    dbUserFitnessData.setIncreasedPoints(increasedPoints);
     return userFitnessDataRepository.save(dbUserFitnessData);
   }
 

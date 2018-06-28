@@ -32,4 +32,6 @@ public class UserFitnessData {
   @NonNull
   private Long calories;
 
+  private Long increasedPoints;
+
 }
