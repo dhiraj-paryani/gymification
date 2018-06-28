@@ -61,4 +61,14 @@ public class ActivityController {
     return activityService.getUserActivitiesByUserName(hwAddress);
   }
 
+  @RequestMapping(
+      value = "users/{hwAddress}/total-time-spent",
+      method = RequestMethod.GET,
+      produces = MediaType.APPLICATION_JSON_VALUE
+  )
+  @ResponseBody
+  public Long getTotalTimeSpent(@PathVariable("hwAddress") String hwAddress) {
+    return activityService.getTotalTimeSpent(hwAddress);
+  }
+
 }

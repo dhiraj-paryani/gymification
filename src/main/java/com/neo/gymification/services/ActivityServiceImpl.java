@@ -80,4 +80,8 @@ public class ActivityServiceImpl {
 
     activityRepository.save(activity);
   }
+
+  public Long getTotalTimeSpent(String hwAddress) {
+    return Long.parseLong("0");
+  }
 }
